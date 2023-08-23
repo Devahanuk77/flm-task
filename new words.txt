@@ -1,0 +1,172 @@
+
+4.downturn
+
+9.offbeat
+10.crotch
+11.starving
+
+
+
+15.wisdom
+18.persuade
+19.mediocre
+
+2.plenary
+3.pledgor
+4.Pleiades
+5.discordant
+
+
+1.tactic
+2.reinforce
+3.sober
+4.cue
+5.heather
+6.stacking
+7.anchoring
+8.curtailed
+9.snooze
+10.foster
+11.cluttered
+12.pile
+13.stumble
+14.merely
+
+16.gratifying
+ 
+
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Transport App</title>
+</h:head>
+<h:body>
+<h2>Vehicle Information Detials</h2>
+
+<h:form id="vehicleForm">
+<p:outputLabel value="Vehicle Name" /><br/>
+<p:inputText value="#{vehiclePrime.newTransport.vehicleType}"/>
+<br/>
+<p:outputLabel value="Vehicle Number" /><br/>
+<p:inputText value="#{vehiclePrime.newTransport.vehicleNumber}"/>
+<br/>
+<p:outputLabel value="Driver Name" /><br/>
+<p:inputText value="#{vehiclePrime.newTransport.driverName}" />
+<br/>
+<p:outputLabel value="Vehicle Mode" /><br/>
+<p:inputText value="#{vehiclePrime.newTransport.vehicleMode}"/>
+<br/>
+
+<p:commandButton value="Save Details" action="#{vehiclePrime.addNew}" update="vehicleDataForm vehicleForm" ><br/>
+
+</p:commandButton><br/>
+
+</h:form>
+
+
+<h:form id ="vehicleDataForm" binding="#{vehiclePrime.tableForm}">
+<p:growl id="msgs" showDetail="true"/> 
+
+<div class="card">
+
+ 
+
+        <p:dataTable id="vehicleData" value="#{vehiclePrime.transports}" var="bean" update="vehicleData" editable="true">
+
+<p:ajax event="rowEdit" listener="#{vehiclePrime.updateDetails}" update="vehicleDataForm:msgs" />
+<p:ajax event="rowEditCancel" listener="#{vehiclePrime.onRowCancel}" update="vehicleDataForm:msgs" />
+
+
+<p:column headerText="Serial No ">
+<h:outputText value="#{bean.id}" />
+</p:column>
+
+<p:column headerText="Vehicle Name">
+<p:cellEditor>
+<f:facet name="output">
+<h:outputText value="#{sch.vehicleType}" />
+</f:facet>
+<f:facet name="input">
+<p:inputText value="#{sch.vehicleType}"  />
+</f:facet>
+</p:cellEditor>
+</p:column>
+
+<p:column headerText="Vehicle Number">
+<p:cellEditor>
+<f:facet name="output">
+<h:outputText value="#{sch.vehicleNumber}" />
+</f:facet>
+<f:facet name="input">
+<p:inputText value="#{sch.vehicleNumber}" />
+</f:facet>
+</p:cellEditor>
+</p:column>
+
+<p:column headerText="Driver Name">
+<p:cellEditor>
+<f:facet name="output">
+<h:outputText value="#{sch.driverName}" />
+</f:facet>
+<f:facet name="input">
+<p:inputText value="#{sch.driverName}"  />
+</f:facet>
+</p:cellEditor>
+</p:column>
+
+
+<p:column headerText="Vehicle Mode">
+<p:cellEditor>
+<f:facet name="output">
+<h:outputText value="#{sch.vehicleMode}" />
+</f:facet>
+<f:facet name="input">
+<p:inputText value="#{sch.vehicleMode}"  />
+</f:facet>
+</p:cellEditor>
+</p:column>
+
+ 
+
+            
+<p:column headerText="Actions">
+<p:commandButton value="Delete" action="#{vehiclePrime.deleteDetails}" update="vehicleData" process="@this">
+<f:setPropertyActionListener target="#{vehiclePrime.transport}" value="#{sch}" />
+</p:commandButton>
+</p:column>
+
+<!--  <p:column headerText="Actions">
+<p:commandButton value="Edit" action="#{sc.edit}" update="schoolDataForm" process="@this">
+<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row" action="#{sc.edit}" />
+<f:setPropertyActionListener target="#{sc.school}" value="#{sch}" />
+</p:commandButton>
+
+</p:column>      -->                
+
+
+
+
+
+<!--  <p:column headerText="Actions">
+<p:commandButton value="Update" action="#{sc.updateSchool}" update="schoolDataForm" process="@this">
+<f:setPropertyActionListener target="#{sc.updatedSchool}" value="#{sch}" />
+</p:commandButton>
+</p:column>   -->
+
+<p:column style="width:6rem">
+<p:rowEditor />
+</p:column>
+
+
+</p:dataTable>
+</div>
+</h:form>            
+</h:body>
+</html>
